@@ -1,0 +1,43 @@
+﻿@page
+@model Project_R_._8.Pages.cshtml.testModel
+@{}
+
+<canvas id="myCanvas" style="height:100vh; width:100vw;">
+	Your browser does not support the HTML canvas tag.
+</canvas>
+
+<canvas id="DashBoard">
+	Your browser does not support the HTML canvas tag.
+</canvas>
+<canvas id="SpeedoMeter">
+	Your browser does not support the HTML canvas tag.
+</canvas>
+
+<canvas id="SevenSegmentCanvas">
+	Your browser does not support the HTML canvas tag.
+</canvas>
+
+<h1 id="SpeedNumber" style="position:absolute;right: 53px;bottom: 47px;margin: 0px">speed</h1>
+
+
+
+@section Scripts {
+	<script>
+		class Skins{
+			DEFAULT = "@Url.Content("~/assets/RaceCar.png")";
+			// Add More Skins In The Future Here
+		}
+
+		class Maps{
+			LAS_VEGAS = "@Url.Content("~/assets/maps/Las_VegasU.png")"
+			MONACO = "@Url.Content("~/assets/maps/Monaco.png")"
+			// Add More Maps When I Make Them
+		}
+	</script>
+
+	<script src="~/js/game.js" asp-append-version="true"></script>
+	<script src="~/js/SevenSegmentDisplay.js" asp-append-version="true"></script>
+}
+@section Styles {
+	<link rel="stylesheet" href="@Url.Content("~/css/test.css")" type="text/css">
+}

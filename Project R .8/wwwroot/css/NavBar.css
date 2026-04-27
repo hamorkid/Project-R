@@ -1,0 +1,31 @@
+﻿.hidden {
+    display: none;
+}
+
+.widthChanger {
+    width: 300px;
+}
+
+.menu {
+    padding: 10px;
+    border-radius: 25px;
+    font-size: 22px;
+    width: 300px;
+}
+
+.menuButton {
+    width: fit-content;
+    height: 110px;
+    font-size: 30px;
+    background: none;
+    margin-bottom: 0px;
+}
+
+.bigMenu {
+    width: fit-content;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background-color: rgb(117, 124, 152);
+    border-radius: 25px;
+}

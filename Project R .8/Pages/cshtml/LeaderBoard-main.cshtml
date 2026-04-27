@@ -1,0 +1,18 @@
+﻿@page
+@model Project_R_._8.Pages.cshtml.LeaderBoard_mainModel
+@{
+	ViewData["Title"] = "LeaderBoard";
+}
+
+<h1 style="margin-bottom: 150px;">LeaderBoard</h1>
+<div class="mapPick">
+    <div class="LB-maps" style="background-image: url('@Url.Content("~/assets/Las_Vegas_LB_Preview.png")');">
+        <a class="MapLink" href="/cshtml/LeaderBoard-LasVegas">Las Vegas</a>
+    </div>
+    <div class="LB-maps" style="background-image: url('@Url.Content("~/assets/Monaco_LB_Preview.png")');">
+        <a class="MapLink" href="/cshtml/LeaderBoard-Monaco">Monaco</a>
+    </div>
+    <div class="LB-maps" style="background-image: url('@Url.Content("~/assets/Abu_Dhabi_LB_Preview.png")');">
+        <a class="MapLink" href="/cshtml/LeaderBoard-AbuDhabi">Abu Dhabi</a>
+    </div>
+</div>
