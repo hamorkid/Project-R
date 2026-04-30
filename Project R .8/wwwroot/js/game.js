@@ -258,14 +258,13 @@ class Car {
 
         Math.min(this.speed, this.maxSpeed);
         this.speed -= this.turnPenalty(dt, this.speed);
-        this.surfacePenalty(detectSurface(), dt);
+        this.surfacePenalty(detectSurface());
         this.speed = Math.max(this.speed, 0);
         this.speed = Math.min(this.speed, this.maxSpeed);
         return this.speed
     }
 
-    surfacePenalty(surface, dt) {
-        
+    surfacePenalty(surface) {
 	    if (surface == "Road") {
             
         }
