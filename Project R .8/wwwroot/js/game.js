@@ -90,8 +90,8 @@ window.addEventListener("keyup", (e) => {
 class Car {
     penalty = 0;
     //Drawing Variables
-    x = 12750;
-    y = 1250;
+    x = 10750; //las vegas x: 12750
+    y = 4200; //las vegas y: 1250
 
     //Car Variables
     speed = 0;
@@ -117,6 +117,9 @@ class Car {
         //acceleration
         if (window.keys["KeyW"]) {
             this.rpm = this.acc(dt);
+            if (this.penaltyMode()) {
+                this.rpm = this.rpm;
+            }
         }
         if (!window.keys["KeyW"]) {
             this.rpm = this.noAcceleration(dt);
@@ -183,6 +186,12 @@ class Car {
     noAcceleration(dt) {
         return (this.rpm - Math.max(Math.pow(this.gear, 1.3) * 200 * dt, (400 * dt)));
     }
+    penaltyMode() {
+        if (((detectSurface() == "OffRoad") || window.keys["KeyA"] || window.keys["KeyD"]) && this.spped > 70) {
+            return true;
+        }
+        return false
+    }
     brake(dt) {
         return this.rpm - 4000 * dt;
     }
@@ -242,10 +251,11 @@ class Car {
         if (this.rpm <= 0) {
             this.speed = 0;
         }
-        else {
+        else { 
             this.speed = (((this.rpm - 800 / 60) * gearRatio * wheelCircumference) * dt) / 1000;
             this.speed = this.speed * 3.6 * 300;
-        }
+        }    
+
         Math.min(this.speed, this.maxSpeed);
         this.speed -= this.turnPenalty(dt, this.speed);
         this.surfacePenalty(detectSurface(), dt);
@@ -255,24 +265,26 @@ class Car {
     }
 
     surfacePenalty(surface, dt) {
-        let count = 1.0001;
+        
 	    if (surface == "Road") {
-            count = 1.0001;   
             
         }
         else if (surface == "Edge") {
-            count = 1.0001;
             
         }
         else if (surface == "Curb") {
-            count = 1.0001;
             
+        
         }
         else if (surface == "OffRoad") {
-        	count += dt;
-            try {this.speed = this.speed * ((1 / (count - 1.0001)) + 0.3); }
-                catch {this.speed *= this.speed * (1 /count - 1) }
-            
+            if (this.speed > 70) {
+                const excess = this.rpm - 70; 
+                this.rpm -= excess * 0.02;
+
+                if (this.speed < 70) {
+                    this.speed = 70;
+                }
+            }
 	    }
         
     }
