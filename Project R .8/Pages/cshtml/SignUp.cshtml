@@ -1,169 +1,105 @@
 ﻿@page
 @model Project_R_._8.Pages.cshtml.SignUpModel
 @{
-ViewData["Title"] = "SignUp";
+    ViewData["Title"] = "SignUp";
 }
-
 
 <div class="login-paper">
     <h1><u>Sign Up</u></h1>
 
-    <form id="LoginForm" onsubmit="return ValidateForm_Signup()">
+    <form method="post">
+        @Html.AntiForgeryToken()
+
+        @if (!ModelState.IsValid)
+        {
+            <div class="ErrorMess">
+                @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
+
         <div class="login-row">
             <label>Username: </label>
-            <input type="text" id="Username" name="Username" />
+            <input type="text" asp-for="Username" />
         </div>
-        <h1 id="UsernameError" class="ErrorMess"></h1>
 
         <div class="login-row">
             <label>Display name: </label>
-            <input type="text" id="Display" name="Display" />
+            <input type="text" asp-for="Display" />
         </div>
-        <h1 id="DisplayError" class="ErrorMess"></h1>
 
         <div class="login-row">
             <label>Email: </label>
-            <input type="text" id="Email" name="Email" value="@@gmail.com" />
+            <input type="text" asp-for="Email" />
         </div>
-        <h1 id="EmailError" class="ErrorMess"></h1>
 
         <div class="login-row">
             <label>Password: </label>
-            <input type="password" id="Password" name="Password" />
+            <input type="password" asp-for="Password" />
         </div>
-        <h1 id="PasswordError" class="ErrorMess"></h1>
 
         <div class="login-row">
             <label>ReType Password: </label>
-            <input type="password" id="Confirmation" name="RePassword" />
+            <input type="password" asp-for="RePassword" />
         </div>
-        <h1 id="ConfirmationError" class="ErrorMess"></h1>
 
         <div class="login-row">
             <label>City: </label>
-            <select name="city" id="city">
+            <select asp-for="city" asp-items="Model.Cities">
                 <option value="">Select a city</option>
-
-                <option>Acre</option>
-                <option>Afula</option>
-                <option>Arad</option>
-                <option>Ashdod</option>
-                <option>Ashkelon</option>
-                <option>Bat Yam</option>
-                <option>Beersheba</option>
-                <option>Beit Shean</option>
-                <option>Beit Shemesh</option>
-                <option>Bnei Brak</option>
-                <option>Dimona</option>
-                <option>Eilat</option>
-                <option>Elad</option>
-                <option>Gan Yavne</option>
-                <option>Givatayim</option>
-                <option>Hadera</option>
-                <option>Haifa</option>
-                <option>Herzliya</option>
-                <option>Hod HaSharon</option>
-                <option>Holon</option>
-                <option>Jerusalem</option>
-                <option>Karmiel</option>
-                <option>Kfar Saba</option>
-                <option>Kiryat Ata</option>
-                <option>Kiryat Bialik</option>
-                <option>Kiryat Gat</option>
-                <option>Kiryat Motzkin</option>
-                <option>Kiryat Ono</option>
-                <option>Kiryat Shmona</option>
-                <option>Kiryat Yam</option>
-                <option>Lod</option>
-                <option>Ma'alot-Tarshiha</option>
-                <option>Migdal HaEmek</option>
-                <option>Modiin-Maccabim-Reut</option>
-                <option>Nahariya</option>
-                <option>Nazareth</option>
-                <option>Nazareth Illit (Nof HaGalil)</option>
-                <option>Nes Ziona</option>
-                <option>Netanya</option>
-                <option>Netivot</option>
-                <option>Ofakim</option>
-                <option>Or Yehuda</option>
-                <option>Petah Tikva</option>
-                <option>Qalansawe</option>
-                <option>Ra'anana</option>
-                <option>Rahat</option>
-                <option>Ramla</option>
-                <option>Rehovot</option>
-                <option>Rishon LeZion</option>
-                <option>Rosh HaAyin</option>
-                <option>Sakhnin</option>
-                <option>Sderot</option>
-                <option>Shefar'am</option>
-                <option>Tamra</option>
-                <option>Tayibe</option>
-                <option>Tel Aviv</option>
-                <option>Tiberias</option>
-                <option>Tira</option>
-                <option>Tirat Carmel</option>
-                <option>Umm al-Fahm</option>
-                <option>Yavne</option>
-                <option>Yehud-Monosson</option>
-                <option>Yokneam</option>
             </select>
         </div>
 
         <div class="login-row">
             <label>Phone number: </label>
-            <input type="text" id="PhoneNum" name="Phone" />
+            <input type="text" asp-for="Phone" />
         </div>
-        <h1 id="PhoneNumError" class="ErrorMess"></h1>
 
         <div class="login-row">
-            <label>gender </label>
+            <label>Gender: </label>
         </div>
         <div>
-            <input type="radio" id="man" name="gender" />
-            <label>man</label>
+            <input type="radio" asp-for="gender" value="man" />
+            <label>Man</label>
         </div>
         <div>
-            <input type="radio" id="woman" name="gender" />
-            <label>woman</label>
+            <input type="radio" asp-for="gender" value="woman" />
+            <label>Woman</label>
         </div>
-        <div>
-            <input type="radio" id="other" name="gender" />
-            <label>other</label>
-        </div>
+
         <div class="login-row">
-            <select id="q1">
-                <option id="blankq1"></option>
-                <option id="q1a1">What are your hobbies?</option>
-                <option id="q2a1">Whats your favorite color?</option>
-                <option id="q3a1">Whats your pet`s name?</option>
-                <option id="q4a1">What is your favorite teacher`s name?</option>
+            <label>Security Question 1: </label>
+            <select asp-for="q1" asp-items="Model.SecurityQuestions">
+                <option value="">Select a question</option>
             </select>
-            <input type="text" id="answer1" name="answer1" />
+            <input type="text" asp-for="answer1" placeholder="Your answer" />
         </div>
+
         <div class="login-row">
-            <select id="q2">
-                <option id="blankq2"></option>
-                <option id="q1a2">What are your hobbies?</option>
-                <option id="q2a2">Whats your favorite color?</option>
-                <option id="q3a2">Whats your pet`s name?</option>
-                <option id="q4a2">What is your favorite teacher`s name?</option>
+            <label>Security Question 2: </label>
+            <select asp-for="q2" asp-items="Model.SecurityQuestions">
+                <option value="">Select a question</option>
             </select>
-            <input type="text" id="answer2" name="answer2" />
+            <input type="text" asp-for="answer2" placeholder="Your answer" />
         </div>
+
         <div class="login-row">
             <label>By Clicking This Box You Agree To The <a href="/cshtml/TermsOfService">Terms Of Service</a></label>
-            <br>
-            <input type="checkbox" id="Terms-Of-Service" name="tos-acceptence" value="true" required />
+            <br />
+            <input type="checkbox" name="tos-acceptence" value="true" required />
         </div>
+
         <div class="login-reset-button">
             <div>
-                <input type="submit" id="login-button" name="submittion" value="Sign Up">
+                <input type="submit" id="login-button" value="Sign Up" />
             </div>
             <div>
-                <input type="reset" id="reset-button" name="Reset" value="Reset">
+                <input type="reset" id="reset-button" value="Reset" />
             </div>
         </div>
+
         <p class="forgot">Already Have An Account? <a href="/cshtml/Login">Log In</a></p>
     </form>
 </div>

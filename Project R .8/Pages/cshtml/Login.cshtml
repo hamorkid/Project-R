@@ -7,29 +7,34 @@
 <div class="login-paper">
     <h1><u>Login</u></h1>
 
-    <form onsubmit="return ValidateForm_Login()">
+    <form method="post">
+        @Html.AntiForgeryToken()
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <p class="ErrorMess">@Model.ErrorMessage</p>
+        }
+
         <div class="login-row">
-            <label for="Username_Login">username: </label>
-            <input type="text" id="Username_Login" name="Username" autocomplete="off" />
+            <label for="Username_Login">Username: </label>
+            <input type="text" asp-for="Username" id="Username_Login" autocomplete="off" />
         </div>
-        <h1 id="Username_LoginError" class="ErrorMess"></h1>
-        <div>
-            <div class="login-row">
-                <label for="Password_Login">Password: </label>
-                <input type="Password" id="Password_Login" name="Password" style="width: 220px;" />
-            </div>
-            <h1 id="Password_LoginError" class="ErrorMess"></h1>
-            <p class="forgot">forgot your password? <a href="/cshtml/PasswordReset-Username">click here to reset</a> it</p>
+
+        <div class="login-row">
+            <label for="Password_Login">Password: </label>
+            <input type="password" asp-for="Password" id="Password_Login" style="width: 220px;" />
         </div>
+        <p class="forgot">Forgot your password? <a href="/cshtml/PasswordReset-Username">click here to reset</a></p>
+
         <div class="login-reset-button">
             <div>
-                <input type="submit" id="submit" name="submit" value="Login">
+                <input type="submit" id="submit" value="Login" />
             </div>
             <div>
-                <input type="reset" id="reset" name="reset" value="Reset">
+                <input type="reset" id="reset" value="Reset" />
             </div>
         </div>
-        <p class="forgot">dont have an account? <a href="/cshtml/SignUp" style="text-decoration: none;">Sign Up</a></p>
+        <p class="forgot">Don't have an account? <a href="/cshtml/SignUp" style="text-decoration: none;">Sign Up</a></p>
     </form>
 </div>
 

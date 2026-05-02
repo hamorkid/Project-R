@@ -2,14 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using Project_R_._8.Services;
 using System;
 
+AppDomain.CurrentDomain.SetData("DataDirectory",
+    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data"));
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSession();
 builder.Services.AddScoped<DBHelper>();
-
-AppDomain.CurrentDomain.SetData("DataDirectory",
-    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data"));
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -28,6 +29,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 

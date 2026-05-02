@@ -6,10 +6,9 @@ namespace Project_R_._8.Services
     public class DBHelper
     {
         private readonly string connStr;
-
         public DBHelper(IConfiguration configuration)
         {
-            connStr = configuration.GetConnectionString("DefaultConnection")!;
+            connStr = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Accounts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
         }
 
         public DataTable GetData(string query)
