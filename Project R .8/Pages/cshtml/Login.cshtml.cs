@@ -28,6 +28,9 @@ namespace Project_R_._8.Pages.cshtml
         public IActionResult OnPost()
         {
             string passwordHash = HashPassword(Password);
+            
+            Console.WriteLine("LOGIN HASH: " + passwordHash);
+            Console.WriteLine("USERNAME: " + Username);
 
             DataTable user = _db.GetData(
                 $"SELECT * FROM Users WHERE UserName = '{Username}' AND PasswordHash = '{passwordHash}'"

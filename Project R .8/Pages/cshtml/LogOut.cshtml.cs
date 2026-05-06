@@ -13,7 +13,7 @@ namespace Project_R_._8.Pages.cshtml
         public IActionResult LogOut()
         {
             HttpContext.Session.Clear(); 
-            return RedirectToPage("/");
+            return Redirect("/");
         }
     }
 }

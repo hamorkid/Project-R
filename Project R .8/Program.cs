@@ -5,6 +5,14 @@ using System;
 AppDomain.CurrentDomain.SetData("DataDirectory",
     Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data"));
 
+System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+{
+    FileName = "sqllocaldb",
+    Arguments = "start MSSQLLocalDB",
+    CreateNoWindow = true,
+    UseShellExecute = false
+})?.WaitForExit(); // Waits for this to finish before continuing
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -34,5 +42,28 @@ app.UseSession();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
+
+lifetime.ApplicationStopping.Register(() =>
+{
+    Console.WriteLine("APP STOPPING - Stopping LocalDB...");
+    try
+    {
+        var process = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "sqllocaldb",
+            Arguments = "stop MSSQLLocalDB",
+            CreateNoWindow = true,
+            UseShellExecute = false
+        });
+        process?.WaitForExit();
+        Console.WriteLine("LOCALDB STOPPED SUCCESSFULLY");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("FAILED TO STOP LOCALDB: " + ex.Message);
+    }
+});
 
 app.Run();

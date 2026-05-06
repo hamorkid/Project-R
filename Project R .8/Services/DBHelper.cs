@@ -8,7 +8,7 @@ namespace Project_R_._8.Services
         private readonly string connStr;
         public DBHelper(IConfiguration configuration)
         {
-            connStr = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Accounts;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
+            connStr = "Data Source=(localdb)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Accounts.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
         }
 
         public DataTable GetData(string query)
