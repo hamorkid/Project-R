@@ -83,3 +83,13 @@ a:hover, button:hover {
     font-size: 30px;
     gap: 40px;
 }
+
+.welcome-message {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 10px;
+    line-height: 1.4;
+    max-width: 600px;
+    padding: 4px 8px;
+}

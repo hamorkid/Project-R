@@ -18,7 +18,7 @@ namespace Project_R_._8.Pages.cshtml
 
         [BindProperty] public string Username { get; set; } = "";
         [BindProperty] public string Password { get; set; } = "";
-
+        [BindProperty] public string DisplayName { get; set; } = "";
         public string ErrorMessage { get; set; } = "";
 
         public void OnGet()
@@ -28,9 +28,6 @@ namespace Project_R_._8.Pages.cshtml
         public IActionResult OnPost()
         {
             string passwordHash = HashPassword(Password);
-            
-            Console.WriteLine("LOGIN HASH: " + passwordHash);
-            Console.WriteLine("USERNAME: " + Username);
 
             DataTable user = _db.GetData(
                 $"SELECT * FROM Users WHERE UserName = '{Username}' AND PasswordHash = '{passwordHash}'"
@@ -45,6 +42,7 @@ namespace Project_R_._8.Pages.cshtml
             // Save user info in session
             HttpContext.Session.SetString("UserId", user.Rows[0]["UserId"].ToString()!);
             HttpContext.Session.SetString("Username", user.Rows[0]["UserName"].ToString()!);
+            HttpContext.Session.SetString("DisplayName", user.Rows[0]["DisplayName"].ToString()!);
             HttpContext.Session.SetString("IsAdmin", user.Rows[0]["isAdmin"].ToString()!);
 
             return Redirect("/");

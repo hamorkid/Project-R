@@ -69,17 +69,17 @@ namespace Project_R_._8.Pages.cshtml
 
             _db.ExecuteQuery(
                 @"INSERT INTO Users 
-                (UserName, Email, PasswordHash, FullName, Gender, CityId, 
+                (UserName, Email, PasswordHash, DisplayName, Gender, CityId, 
                 SecurityQuestion1Id, SecurityAnswer1, SecurityQuestion2Id, SecurityAnswer2, Phone)
                 VALUES 
-                (@Username, @Email, @PasswordHash, @FullName, @Gender, @CityId,
+                (@Username, @Email, @PasswordHash, @DisplayName, @Gender, @CityId,
                 @Q1, @A1, @Q2, @A2, @Phone)",
                 new SqlParameter[]
                 {
                     new SqlParameter("@Username", Username),
                     new SqlParameter("@Email", Email),
                     new SqlParameter("@PasswordHash", passwordHash),
-                    new SqlParameter("@FullName", Display),
+                    new SqlParameter("@DisplayName", Display),
                     new SqlParameter("@Gender", isMale),
                     new SqlParameter("@CityId", city),
                     new SqlParameter("@Q1", q1),
