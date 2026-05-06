@@ -5,14 +5,9 @@ namespace Project_R_._8.Pages.cshtml
 {
     public class LogOutModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            LogOut();
-
-        }
-        public IActionResult LogOut()
-        {
-            HttpContext.Session.Clear(); 
+            HttpContext.Session.Clear();
             return Redirect("/");
         }
     }
