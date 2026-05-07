@@ -13,8 +13,6 @@ namespace Project_R_._8.Pages.cshtml
         public string ErrorMessage { get; set; } = "";
 
         private readonly DBHelper _db;
-        private readonly PasswordReset_UsernameModel UsernameModel;
-
 
         public PasswordReset_AnswersModel(DBHelper db)
         {
@@ -24,7 +22,7 @@ namespace Project_R_._8.Pages.cshtml
         public void OnGet()
         {
             DataTable user = _db.GetData(
-                $"SELECT * FROM Users WHERE UserName = '{UsernameModel.SendUsername()}'"
+                $"SELECT * FROM Users WHERE UserName = '{TempData.Peek("Username")!.ToString()}'"
             );
             
             Q1 = user.Rows[0]["Q1"].ToString()!;
@@ -34,7 +32,7 @@ namespace Project_R_._8.Pages.cshtml
         public IActionResult OnPost()
         {
             DataTable user = _db.GetData(
-                $"SELECT * FROM Users WHERE UserName = '{UsernameModel.SendUsername()}'"
+                $"SELECT * FROM Users WHERE UserName = '{_UsernameModel.SendUsername()}'"
             );
 
             if (!((A1 == user.Rows[0]["A1"].ToString()!) && (A2 == user.Rows[0]["A2"].ToString()!)))
