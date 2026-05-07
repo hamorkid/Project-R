@@ -36,7 +36,7 @@ namespace Project_R_._8.Pages.cshtml
 
             _db.ExecuteQuery(
                 @"UPDATE Users
-                SET Password = @PasswordHash
+                SET PasswordHash = @PasswordHash
                 WHERE UserName = @Username",
                 new {PasswordHash = PasswordHash, Username = TempData["Username"]!.ToString()}
             );
