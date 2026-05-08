@@ -1,5 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
+using Project_R_._8.Services;
+using System.Data;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Project_R_._8.Pages.cshtml
 {
@@ -38,7 +44,7 @@ namespace Project_R_._8.Pages.cshtml
                 @"UPDATE Users
                 SET PasswordHash = @PasswordHash
                 WHERE UserName = @Username",
-                new {PasswordHash = PasswordHash, Username = TempData["Username"]!.ToString()}
+                new SqlParameter[] { new SqlParameter("@PasswordHash", PasswordHash), new SqlParameter("@Username", TempData["Username"]!.ToString())}
             );
 
             return RedirectToPage("/cshtml/HomePage");

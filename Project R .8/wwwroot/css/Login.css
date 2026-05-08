@@ -29,7 +29,7 @@ input[type="text"], [type="password"], [type="select"] {
     width: 200px;
     height: 25px;
     background-color: rgb(117, 124, 152);
-    border: solid rgb(67, 74, 102) 2px;
+    border: solid rgb(67, 74, 102) 1px;
     border-radius: 10px;
 }
 
@@ -65,9 +65,8 @@ input[type="checkbox"] {
 .login-row {
     font-size: 20px;
     padding: 15px;
-    margin-right: 40%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .ErrorMess {

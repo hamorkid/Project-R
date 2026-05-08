@@ -95,7 +95,7 @@ class Car {
 
     //Car Variables
     speed = 0;
-    angle = 0.23 * Math.PI;
+    angle = 0.67 * Math.PI; // las vegas angle: 0.23
     rpm = 0;
     gear = 1;
     pickedgear = 1;

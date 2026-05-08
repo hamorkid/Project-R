@@ -1,5 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
+using Project_R_._8.Services;
+using System.Data;
+using System.Security.Cryptography;
+using System.Text;
+
 
 namespace Project_R_._8.Pages.cshtml
 {
@@ -31,7 +38,7 @@ namespace Project_R_._8.Pages.cshtml
             }
 
             TempData["Username"] = Username;
-            return RedirectToPage("/cshtml/PasswordReset-Answers")
+            return RedirectToPage("/cshtml/PasswordReset-Answers");
         }
     }
 }
