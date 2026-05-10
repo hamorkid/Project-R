@@ -7,7 +7,7 @@
 <div class="login-paper">
     <h1><u>Login</u></h1>
 
-    <form method="post">
+    <form method="post" id="loginForm">
         @Html.AntiForgeryToken()
 
         @if (!string.IsNullOrEmpty(Model.ErrorMessage))
@@ -17,13 +17,14 @@
 
         <div class="login-row">
             <label for="Username_Login">Username: </label>
-            <input type="text" asp-for="Username" id="Username_Login" autocomplete="off" />
+            <input type="text" asp-for="Username" id="Username_Login" autocomplete="off" required />
         </div>
-
+		<span id="Username_LoginError" class="ErrorMess"></span>
         <div class="login-row">
             <label for="Password_Login">Password: </label>
-            <input type="password" asp-for="Password" id="Password_Login" style="width: 220px;" />
-        </div>
+            <input type="password" asp-for="Password" id="Password_Login" style="width: 220px;" required />
+		</div>
+        <span id="Password_LoginError" class="ErrorMess"></span>
         <p class="forgot">Forgot your password? <a href="/cshtml/PasswordReset-Username">click here to reset</a></p>
 
         <div class="login-reset-button">

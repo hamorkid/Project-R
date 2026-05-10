@@ -7,7 +7,7 @@
 <div class="login-paper">
     <h1><u>Sign Up</u></h1>
 
-    <form method="post">
+    <form method="post" id="signOpenForm">
         @Html.AntiForgeryToken()
 
         @if (!ModelState.IsValid)
@@ -22,27 +22,26 @@
 
         <div class="login-row">
             <label>Username: </label>
-            <input type="text" asp-for="Username" />
+            <input type="text" asp-for="Username" required />
         </div>
-
+        <span id="UsernameError" class="ErrorMess"></span>
         <div class="login-row">
             <label>Display name: </label>
-            <input type="text" asp-for="Display" />
+            <input type="text" asp-for="Display" required />
         </div>
-
+        <span id="DisplayError" class="ErrorMess"></span>
         <div class="login-row">
             <label>Email: </label>
-            <input type="text" asp-for="Email" />
+            <input type="text" asp-for="Email" required />
         </div>
-
         <div class="login-row">
             <label>Password: </label>
-            <input type="password" asp-for="Password" />
+            <input type="password" asp-for="Password" required />
         </div>
-
+        <span id="PasswordError" class="ErrorMess"></span>
         <div class="login-row">
             <label>ReType Password: </label>
-            <input type="password" asp-for="RePassword" />
+            <input type="password" asp-for="RePassword" required />
         </div>
 
         <div class="login-row">
@@ -54,7 +53,7 @@
 
         <div class="login-row">
             <label>Phone number: </label>
-            <input type="text" asp-for="Phone" />
+            <input type="text" asp-for="Phone" required/>
         </div>
 
         <div class="login-row">
@@ -74,7 +73,7 @@
             <select asp-for="q1" asp-items="Model.SecurityQuestions">
                 <option value="">Select a question</option>
             </select>
-            <input type="text" asp-for="answer1" placeholder="Your answer" />
+            <input type="text" asp-for="answer1" placeholder="Your answer" required />
         </div>
 
         <div class="login-row">
@@ -82,7 +81,7 @@
             <select asp-for="q2" asp-items="Model.SecurityQuestions">
                 <option value="">Select a question</option>
             </select>
-            <input type="text" asp-for="answer2" placeholder="Your answer" />
+            <input type="text" asp-for="answer2" placeholder="Your answer" required />
         </div>
 
         <div class="login-row">

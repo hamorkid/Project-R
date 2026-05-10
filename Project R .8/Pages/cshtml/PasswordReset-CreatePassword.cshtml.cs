@@ -20,10 +20,7 @@ namespace Project_R_._8.Pages.cshtml
 
         [BindProperty] public string Password { get; set; } = "";
         [BindProperty] public string RePassword { get; set; } = "";
-        
-        public string ErrorMessage { get; set; } = "";
 
-        
 
         public void OnGet()
         {
@@ -32,12 +29,6 @@ namespace Project_R_._8.Pages.cshtml
 
         public IActionResult OnPost() 
         {
-            if (Password != RePassword)
-            {
-                ErrorMessage = "Passwords do not match";
-                return Page();
-            }
-
             string PasswordHash = HashPassword(Password);
 
             _db.ExecuteQuery(

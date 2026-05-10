@@ -1,53 +1,48 @@
-﻿function ValidateForm_Login() {
-    let isValid = true;
-
-    isValid = ValidateUsername() && isValid;
-    isValid = ValidatePassword() && isValid;
-
-    if (isValid) {
-        window.open('/');
+﻿document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function (e) {
+            let isValid = true;
+            isValid = ValidateUsername() && isValid;
+            isValid = ValidatePassword() && isValid;
+            if (!isValid) e.preventDefault();
+        });
     }
-    return isValid
-}
 
-function ValidateForm_Signup() {
-    let isValid = true;
-
-    isValid = ValidateUsername_Signup() && isValid;
-    isVlaid = ValidateDisplay_Signup() && isValid;
-    isValid = ValidatePassword_Signup() && isValid;
-    isValid = ValidateConfirmation_Signup() && isValid;
-    isValid = ValidateEmail_Signup() && isValid;
-    isValid = ValidatePhoneNum_Signup() && isValid;
-
-    if (isValid) {
-        window.open('/');
+    // Signup Page
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+        signupForm.addEventListener('submit', function (e) {
+            let isValid = true;
+            isValid = ValidateUsername_Signup() && isValid;
+            isValid = ValidateDisplay_Signup() && isValid;
+            isValid = ValidatePassword_Signup() && isValid;
+            isValid = ValidateConfirmation_Signup() && isValid;
+            isValid = ValidateEmail_Signup() && isValid;
+            isValid = ValidatePhoneNum_Signup() && isValid;
+            if (!isValid) e.preventDefault();
+        });
     }
-    return isValid;
-}
 
-function ValidateForm_Username() {
-    let isValid = true;
-
-    isValid = ValidateUsername_ForgotPass();
-
-    if (isValid) {
-        window.open('/cshtml/PasswordReset-Answers');
+    // Forgot Password Page
+    const forgotForm = document.getElementById('forgotForm');
+    if (forgotForm) {
+        forgotForm.addEventListener('submit', function (e) {
+            if (!ValidateUsername_ForgotPass()) e.preventDefault();
+        });
     }
-    return isValid;
-}
 
-function ValidateForm_SetNewPassword() {
-    let isValid = true;
-
-    isValid = ValidatePassword_SetNewPassword() && isValid;
-    isValid = ValidateConfirmation_SetNewPassword() && isValid;
-
-    if (isValid) {
-        window.open('/cshtml/Login');
+    // Set New Password Page
+    const newPassForm = document.getElementById('newPassForm');
+    if (newPassForm) {
+        newPassForm.addEventListener('submit', function (e) {
+            let isValid = true;
+            isValid = ValidatePassword_SetNewPassword() && isValid;
+            isValid = ValidateConfirmation_SetNewPassword() && isValid;
+            if (!isValid) e.preventDefault();
+        });
     }
-    return isValid;
-}
+});
 
 
 //login Page Validation
@@ -57,7 +52,7 @@ function ValidateUsername() {
     const usernameError = document.getElementById("Username_LoginError");
 
     if (!/^[A-Za-z][A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{2,}$/.test(username)) {
-        usernameError.textContent = "Must start with an English letter, be at least 3 characters, and contain no spaces.";
+        usernameError.textContent = "Invalid Username";
         return false;
     } else {
         usernameError.textContent = "";
@@ -193,14 +188,14 @@ function ValidatePassword_SetNewPassword() {
 
 function ValidateConfirmation_SetNewPassword() {
     const password = document.getElementById("newPassword_SetNewPassword").value;
-    const confirmation = document.getElementById("Confirmation_SetNewPassword").value;
-    const confirmationError = document.getElementById("Confirmation_SetNewPasswordError");
+    const rePassword = document.getElementById("confirmation_SetNewPassword").value;
+    const passwordError = document.getElementById("confirmation_SetNewPasswordError");
 
-    if (password != confirmation) {
-        confirmationError.textContent = "Must be identical to the password entered."
+    if (rePassword == password) {
+        passwordError.textContent = "Password are not the same";
         return false;
     } else {
-        confirmationError.textContent = "";
+        passwordError.textContent = "";
         return true;
     }
 }
