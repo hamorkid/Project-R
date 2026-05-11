@@ -1,0 +1,115 @@
+﻿@page
+@model Project_R_._8.Pages.cshtml.SignUpModel
+@{
+    ViewData["Title"] = "SignUp";
+}
+
+<div class="login-paper">
+    <h1><u>Sign Up</u></h1>
+
+    <form method="post" id="signupForm">
+        @Html.AntiForgeryToken()
+
+        @if (!ModelState.IsValid)
+        {
+            <div class="ErrorMess">
+                @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
+
+        <span id="UsernameError" class="ErrorMess"></span>
+        <div class="login-row">
+            <label>Username: </label>
+            <input type="text" asp-for="Username" id="Username" required />
+        </div>
+        
+        <span id="DisplayError" class="ErrorMess"></span>
+        <div class="login-row">
+            <label>Display name: </label>
+            <input type="text" asp-for="Display" id="Display" required />
+        </div>
+
+        <span id="EmailError" class="ErrorMess"></span>
+        <div class="login-row">
+            <label>Email: </label>
+            <input type="text" asp-for="Email" id="Email" required />
+        </div>
+
+        <span id="PasswordError" class="ErrorMess"></span>
+        <div class="login-row">
+            <label>Password: </label>
+            <input type="password" asp-for="Password" id="Password" required />
+        </div>
+
+        <span id="ConfirmationError" class="ErrorMess"></span>
+        <div class="login-row">
+            <label>ReType Password: </label>
+            <input type="password" asp-for="RePassword" id="Confirmation" required />
+        </div>
+
+        <div class="login-row">
+            <label>City: </label>
+            <select asp-for="city" asp-items="Model.Cities">
+                <option value="">Select a city</option>
+            </select>
+        </div>
+
+        <span id="PhoneNumError" class="ErrorMess"></span>
+        <div class="login-row">
+            <label>Phone number: </label>
+            <input type="text" asp-for="Phone" id="PhoneNum" required />
+        </div>
+
+        <div class="login-row">
+            <label>Gender: </label>
+        </div>
+        <div>
+            <input type="radio" asp-for="gender" value="man" />
+            <label>Man</label>
+        </div>
+        <div>
+            <input type="radio" asp-for="gender" value="woman" />
+            <label>Woman</label>
+        </div>
+
+        <div class="login-row">
+            <label>Security Question 1: </label>
+            <select asp-for="q1" asp-items="Model.SecurityQuestions">
+                <option value="">Select a question</option>
+            </select>
+            <input type="text" asp-for="answer1" placeholder="Your answer" required />
+        </div>
+
+        <div class="login-row">
+            <label>Security Question 2: </label>
+            <select asp-for="q2" asp-items="Model.SecurityQuestions">
+                <option value="">Select a question</option>
+            </select>
+            <input type="text" asp-for="answer2" placeholder="Your answer" required />
+        </div>
+
+        <div class="login-row">
+            <label>By Clicking This Box You Agree To The <a href="/cshtml/TermsOfService">Terms Of Service</a></label>
+            <br />
+            <input type="checkbox" name="tos-acceptence" value="true" required />
+        </div>
+
+        <div class="login-reset-button">
+            <div>
+                <input type="submit" id="login-button" value="Sign Up" />
+            </div>
+            <div>
+                <input type="reset" id="reset-button" value="Reset" />
+            </div>
+        </div>
+
+        <p class="forgot">Already Have An Account? <a href="/cshtml/Login">Log In</a></p>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/Validation.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,67 @@
+﻿.HowToPlay {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    background-color: rgb(117, 124, 152);
+    width: fit-content+40px;
+    height: 100px;
+    font-size: 24px;
+    border-radius: 10px;
+    border: none;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 20%;
+    margin: 100px;
+}
+
+#SpeedoMeter {
+    border-right: 50px solid black;
+    border-left: 50px solid black;
+    background: none;
+    width: 600px;
+    height: 300px;
+}
+
+#DashBoard {
+    border-right: 50px solid black;
+    border-left: 50px solid black;
+    background: none;
+    width: 600px;
+    height: 300px;
+}
+
+.buttons-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.NumDisp {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.buttonss {
+    background-color: rgb(117, 124, 152);
+    font-size: 50px;
+    border: #5682B1;
+    border-radius: 25px;
+    width: 400px;
+    height: 300px;
+    padding: 20px;
+    font-weight: bold;
+}
+
+.practiceOrg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 200px;
+}

@@ -1,0 +1,74 @@
+﻿@page
+@model Project_R_._8.Pages.cshtml.RulesModel
+@{
+    ViewData["Title"] = "Tutorial";
+}
+
+<h1>🏆 Leaderboard Validation Rules</h1>
+<p>
+    Only runs that follow all rules below will be accepted onto the leaderboard.
+    Any violation will result in the run being invalidated.
+</p>
+<section class="leaderboard-rules">
+    <ol>
+        <li>
+            <strong>Checkpoint Order</strong><br>
+            All checkpoints must be passed in the correct order.
+            Skipping, reversing, or missing a checkpoint will invalidate the run.
+        </li>
+
+        <li>
+            <strong>Track Limits</strong><br>
+            Leaving the track for more than the allowed time limit is not permitted.
+            Using off-track areas to gain an advantage will invalidate the run.
+        </li>
+
+        <li>
+            <strong>Respawn Abuse</strong><br>
+            Excessive use of reset or respawn features is not allowed.
+            Respawning to gain time or position advantages will invalidate the run.
+        </li>
+
+        <li>
+            <strong>Time Manipulation</strong><br>
+            Runs are invalid if the browser tab loses focus, the page is refreshed,
+            developer tools are opened, or system time is modified during the run.
+        </li>
+
+        <li>
+            <strong>Speed and Physics Integrity</strong><br>
+            Modifying game speed, physics values, collision behavior,
+            or movement limits will invalidate the run.
+        </li>
+
+        <li>
+            <strong>Pause Exploitation</strong><br>
+            Pausing the game or minimizing the browser during a leaderboard run
+            will invalidate the run.
+        </li>
+
+        <li>
+            <strong>Automated Inputs</strong><br>
+            The use of macros, scripts, bots, or automated input tools is not allowed.
+            Input patterns must reflect normal human behavior.
+        </li>
+
+        <li>
+            <strong>Power-Up Restrictions</strong><br>
+            Power-ups are disabled in leaderboard mode unless explicitly stated.
+            Using any restricted power-up will invalidate the run.
+        </li>
+
+        <li>
+            <strong>Debug and Developer Modes</strong><br>
+            Runs completed with debug features, developer tools,
+            or test modes enabled will not be accepted.
+        </li>
+
+        <li>
+            <strong>Game Version Consistency</strong><br>
+            Runs must be completed on the current official game version.
+            Runs from outdated or modified versions are invalid.
+        </li>
+    </ol>
+</section>

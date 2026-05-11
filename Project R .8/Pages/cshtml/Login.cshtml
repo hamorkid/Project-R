@@ -1,0 +1,44 @@
+﻿@page
+@model Project_R_._8.Pages.cshtml.LoginModel
+@{
+	ViewData["Title"] = "Login To 2DMania";
+}
+
+<div class="login-paper">
+    <h1><u>Login</u></h1>
+
+    <form method="post" id="loginForm">
+        @Html.AntiForgeryToken()
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <p class="ErrorMess">@Model.ErrorMessage</p>
+        }
+
+        <div class="login-row">
+            <label for="Username_Login">Username: </label>
+            <input type="text" asp-for="Username" id="Username_Login" autocomplete="off" required />
+        </div>
+		<span id="Username_LoginError" class="ErrorMess"></span>
+        <div class="login-row">
+            <label for="Password_Login">Password: </label>
+            <input type="password" asp-for="Password" id="Password_Login" style="width: 220px;" required />
+		</div>
+        <span id="Password_LoginError" class="ErrorMess"></span>
+        <p class="forgot">Forgot your password? <a href="/cshtml/PasswordReset-Username">click here to reset</a></p>
+
+        <div class="login-reset-button">
+            <div>
+                <input type="submit" id="submit" value="Login" />
+            </div>
+            <div>
+                <input type="reset" id="reset" value="Reset" />
+            </div>
+        </div>
+        <p class="forgot">Don't have an account? <a href="/cshtml/SignUp" style="text-decoration: none;">Sign Up</a></p>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/Validation.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Project_R_._8.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/General.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/LeaderBoard.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true">
+	<link rel="stylesheet" href="~/css/NavBar.css" asp-append-version="true">
+
+    @await RenderSectionAsync("Styles", required: false)
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div id="bigMenu" class="bigMenu">
+        <button class="menuButton widthChanger" id="menuButton">⚙️Menu</button>
+
+        <div id="menu" class="menu hidden widthChanger">
+            <div><a href="/">🏠Home</a></div>
+            <div><a href="/cshtml/Login">🔑Login</a></div>
+            <div><a href="/cshtml/SignUp">📝SignUp</a></div>
+            <div><a href="/cshtml/Race">🏎️Race</a></div>
+            <div><a href="/cshtml/DashBoardPractice">🏋️‍Practice</a></div>
+            <div><a href="/cshtml/LeaderBoard-main">🏆LeaderBoard</a></div>
+            <div><a href="/cshtml/AboutUs">👥AboutUs</a></div>
+            <div><a href="/cshtml/TermsOfService">⚖️TermsOfService</a></div>
+            <div><a href="/cshtml/Rules">📜Rules</a></div>
+            <div><a href="/cshtml/Inspiration">✨My Inspiration</a></div>
+            <div><a href="/cshtml/LogOut">LogOut</a></div>
+        </div>
+    </div>
+
+    @RenderBody()
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/NavBar.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    
+</body>
+</html>

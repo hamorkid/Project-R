@@ -1,0 +1,28 @@
+﻿@page
+@model Project_R_._8.Pages.cshtml.DashBoardPracticeModel
+@{
+	ViewData["Title"] = "DashBoard Practice";
+}
+
+<button class="HowToPlay" onclick="window.location.href='tutorial'">How To Play</button>
+<h1>DashBoard Practice</h1>
+<div class="practiceOrg">
+	<div class="column">
+		<div class="NumDisp">
+			<h1 id="CurrentGear">Gear: 1</h1>
+			<h1 id="CurrentRpm">Rpm: 800</h1>
+		</div>
+		<canvas id="DashBoard"></canvas>
+	</div>
+	<div class="column">
+		<h1 id="CurrentSpeed">Speed: 0</h1>
+		<canvas id="SpeedoMeter"></canvas>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/js/DashBoard.js" asp-append-version="true"></script>
+}
+@section Styles {
+	<link rel="stylesheet" href="@Url.Content("~/css/DashBoard.css")" asp-append-version="true">
+}
