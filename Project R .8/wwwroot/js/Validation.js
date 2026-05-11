@@ -191,7 +191,7 @@ function ValidateConfirmation_SetNewPassword() {
     const rePassword = document.getElementById("confirmation_SetNewPassword").value;
     const passwordError = document.getElementById("confirmation_SetNewPasswordError");
 
-    if (rePassword == password) {
+    if (rePassword != password) {
         passwordError.textContent = "Password are not the same";
         return false;
     } else {

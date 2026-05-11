@@ -1,0 +1,21 @@
+﻿@page
+@model Project_R_._8.Pages.cshtml.MapSelectionModel
+@{
+}
+
+<div class="mapPick">
+    <div style="background-image: url('@Url.Content("~/assets/Las_Vegas_LB_Preview.png")');">
+        <a href="/cshtml/LasVegas">Las Vegas</a>
+    </div>
+    <div style="background-image: url('@Url.Content("~/assets/Monaco_LB_Preview.png")');">
+        <a href="/cshtml/Monaco">Monaco</a>
+    </div>
+    <div style="background-image: url('@Url.Content("~/assets/Abu_Dhabi_LB_Preview.png")');">
+        <a href="/cshtml/AbuDhabi">Abu Dhabi</a>
+    </div>
+</div>
+
+
+@section Styles {
+    <link rel="stylesheet" href="@Url.Content("~/css/Game.css")" asp-append-version="true">
+}

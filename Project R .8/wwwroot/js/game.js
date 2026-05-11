@@ -399,10 +399,10 @@ function gameLoop(currentTime) {
 
 const track = new Image();
 //track.src = maps.LAS_VEGAS;
-track.src = maps.MONACO;
+track.src = maps.MAP;
 
 const carImg = new Image();
-carImg.src = skins.DEFAULT;
+carImg.src = skins.SELECTED-SKIN;
 
 requestAnimationFrame(gameLoop);
 

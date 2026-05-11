@@ -7,7 +7,8 @@
 <div class="login-paper">
     <h1><u>Sign Up</u></h1>
 
-    <form method="post" id="signOpenForm">
+    <form method="post" id="signupForm">
+>>>>>>> origin/New-Branch
         @Html.AntiForgeryToken()
 
         @if (!ModelState.IsValid)
@@ -20,28 +21,35 @@
             </div>
         }
 
-        <div class="login-row">
-            <label>Username: </label>
-            <input type="text" asp-for="Username" required />
-        </div>
         <span id="UsernameError" class="ErrorMess"></span>
         <div class="login-row">
-            <label>Display name: </label>
-            <input type="text" asp-for="Display" required />
+            <label>Username: </label>
+            <input type="text" asp-for="Username" id="Username" required />
         </div>
+        
         <span id="DisplayError" class="ErrorMess"></span>
         <div class="login-row">
-            <label>Email: </label>
-            <input type="text" asp-for="Email" required />
+            <label>Display name: </label>
+            <input type="text" asp-for="Display" id="Display" required />
         </div>
+
+        <span id="EmailError" class="ErrorMess"></span>
         <div class="login-row">
-            <label>Password: </label>
-            <input type="password" asp-for="Password" required />
+            <label>Email: </label>
+            <input type="text" asp-for="Email" id="Email" required />
         </div>
+
         <span id="PasswordError" class="ErrorMess"></span>
         <div class="login-row">
+            <label>Password: </label>
+            <input type="password" asp-for="Password" id="Password" required />
+        </div>
+
+        <span id="ConfirmationError" class="ErrorMess"></span>
+        <div class="login-row">
             <label>ReType Password: </label>
-            <input type="password" asp-for="RePassword" required />
+            <input type="password" asp-for="RePassword" id="Confirmation" required />
+>>>>>>> origin/New-Branch
         </div>
 
         <div class="login-row">
@@ -51,9 +59,11 @@
             </select>
         </div>
 
+        <span id="PhoneNumError" class="ErrorMess"></span>
         <div class="login-row">
             <label>Phone number: </label>
-            <input type="text" asp-for="Phone" required/>
+            <input type="text" asp-for="Phone" id="PhoneNum" required />
+>>>>>>> origin/New-Branch
         </div>
 
         <div class="login-row">
