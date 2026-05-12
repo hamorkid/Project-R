@@ -352,7 +352,7 @@ function generateTrack(dt) {
     mapY -= car.y;
    
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-    ctx.drawImage(track, mapX, mapY, myCanvas.width * 8, myCanvas.height * 8);        
+    ctx.drawImage(track, mapX, mapY, myCanvas.width * 8, myCanvas.height * 8);
 
     track.onerror = function () {
         console.error("Image couldn't load. Check path:", track.src);
@@ -393,6 +393,7 @@ function gameLoop(currentTime) {
     car.update(deltaTime);
     generateCar();
     generateDashBoard();
+    carImg.src = skins.SELECTED_SKIN;
 
     requestAnimationFrame(gameLoop);
 }
@@ -402,7 +403,7 @@ const track = new Image();
 track.src = maps.MAP;
 
 const carImg = new Image();
-carImg.src = skins.SELECTED-SKIN;
+carImg.src = skins.SELECTED_SKIN;
 
 requestAnimationFrame(gameLoop);
 

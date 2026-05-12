@@ -20,26 +20,75 @@
 
 <h1 id="SpeedNumber" style="position:absolute;right: 53px;bottom: 47px;margin: 0px">speed</h1>
 
+<div id="skin-selector" style="position:absolute; top:10px; left:10px; z-index:100; background:rgba(0,0,0,0.6); padding:10px; border-radius:8px;">
+	<p style="color:white; margin:0 0 5px 0; font-size:12px;">SELECT SKIN</p>
+	<div id="skin-buttons" style="display:flex; gap:5px;">
+	</div>
+</div>
 
 
 @section Scripts {
 	<script>
-		class Skins{
-			BLUE = "@Url.Content("~/assets/Skins/Blue.png")";
-			GRAY = "@Url.Content("~/assets/Skins/Gray.png")";
-			GREEN = "@Url.Content("~/assets/Skins/Green.png")";
-			ORANGE = "@Url.Content("~/assets/Skins/Orange.png")";
-			PINK = "@Url.Content("~/assets/Skins/Pink.png")";
-			RED = "@Url.Content("~/assets/Skins/Red.png")";
-			WHITE = "@Url.Content("~/assets/Skins/White.png")";
-			SELECTED-SKIN = 0;
-			// Add More Skins In The Future Here
-		}
+        class Skins {
+            constructor() {
+                this.BLUE = "@Url.Content("~/assets/Skins/Blue.png")";
+                this.GRAY = "@Url.Content("~/assets/Skins/Gray.png")";
+                this.GREEN = "@Url.Content("~/assets/Skins/Green.png")";
+                this.ORANGE = "@Url.Content("~/assets/Skins/Orange.png")";
+                this.PINK = "@Url.Content("~/assets/Skins/Pink.png")";
+                this.RED = "@Url.Content("~/assets/Skins/Red.png")";
+                this.WHITE = "@Url.Content("~/assets/Skins/White.png")";
+                this.SELECTED_SKIN = this.RED;
+
+                this.ALL_SKINS = [
+                    { name: "Blue", path: this.BLUE },
+                    { name: "Gray", path: this.GRAY },
+                    { name: "Green", path: this.GREEN },
+                    { name: "Orange", path: this.ORANGE },
+                    { name: "Pink", path: this.PINK },
+                    { name: "Red", path: this.RED },
+                    { name: "White", path: this.WHITE }
+                ];
+            }
+
+            setSkin(skin) {
+                this.SELECTED_SKIN = skin;
+            }
+
+            buildUI() {
+                const container = document.getElementById("skin-buttons");
+                this.ALL_SKINS.forEach(skin => {
+                    const img = document.createElement("img");
+                    img.src = skin.path;
+                    img.title = skin.name;
+                    img.style.cssText = "width:40px; height:40px; cursor:pointer; border:2px solid transparent; border-radius:4px;";
+
+                    img.addEventListener("click", () => {
+                        this.setSkin(skin.path);
+                        // Highlight selected
+                        container.querySelectorAll("img").forEach(i => i.style.borderColor = "transparent");
+                        img.style.borderColor = "yellow";
+                    });
+
+                    // Highlight default skin
+                    if (skin.path === this.SELECTED_SKIN) {
+                        img.style.borderColor = "yellow";
+                    }
+
+                    container.appendChild(img);
+                });
+            }
+        }
 
 		class Maps{
-			MAP = "@Url.Content("~/assets/Maps/Monaco.png")"
+			constructor() {
+				this.MAP = "@Url.Content("~/assets/Maps/Las_VegasU.png")"
+			}
 			// Add More Maps When I Make Them
 		}
+
+        const skin = new Skins();
+        skin.buildUI();
 	</script>
 
 	<script src="~/js/game.js" asp-append-version="true"></script>
