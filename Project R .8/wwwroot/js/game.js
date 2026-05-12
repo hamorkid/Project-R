@@ -393,7 +393,6 @@ function gameLoop(currentTime) {
     car.update(deltaTime);
     generateCar();
     generateDashBoard();
-    carImg.src = skins.SELECTED_SKIN;
 
     requestAnimationFrame(gameLoop);
 }

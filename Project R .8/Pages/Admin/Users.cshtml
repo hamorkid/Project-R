@@ -1,0 +1,100 @@
+@page
+@model Project_R_._8.Pages.Admin.ManageUsersModel
+@{
+    ViewData["Title"] = "Users Admin";
+}
+
+<div class="container mt-4">
+    <h2>User Administration</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.UsersList)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@(user.IsAdmin ? "Admin" : "User")</td>
+                    <td>
+                        <!-- This button stores data in 'data-' attributes for the JS to grab -->
+                        <button type="button" class="btn btn-sm btn-warning"
+                                onclick="openEditModal('@user.UserId', '@user.UserName', '@user.Email', '@user.DisplayName', '@user.Phone', '@user.CityId', '@user.Gender.ToString().ToLower()', '@user.IsAdmin.ToString().ToLower()')">
+                            Edit All Fields
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="UpdateUser">
+                <div class="modal-header"><h5>Edit User</h5></div>
+                <div class="modal-body">
+                    <input type="hidden" id="editId" asp-for="EditUser.UserId" />
+                    <div class="mb-2">
+                        <label>Username</label>
+                        <input id="editUser" asp-for="EditUser.UserName" class="form-control" />
+                    </div>
+                    <div class="mb-2">
+                        <label>Email</label>
+                        <input id="editEmail" asp-for="EditUser.Email" class="form-control" />
+                    </div>
+                    <div class="mb-2">
+                        <label>Display Name</label>
+                        <input id="editDisplay" asp-for="EditUser.DisplayName" class="form-control" />
+                    </div>
+                    <div class="mb-2">
+                        <label>Phone</label>
+                        <input id="editPhone" asp-for="EditUser.Phone" class="form-control" />
+                    </div>
+                    <div class="mb-2">
+                        <label>City ID</label>
+                        <input id="editCity" asp-for="EditUser.CityId" class="form-control" />
+                    </div>
+                    <div class="form-check">
+                        <input id="editGender" asp-for="EditUser.Gender" class="form-check-input" type="checkbox" />
+                        <label class="form-check-label">Is Male?</label>
+                    </div>
+                    <div class="form-check">
+                        <input id="editAdmin" asp-for="EditUser.IsAdmin" class="form-check-input" type="checkbox" />
+                        <label class="form-check-label">Is Admin?</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openEditModal(id, user, email, display, phone, city, gender, admin) {
+            // Fill the modal fields with the current user's data
+            document.getElementById('editId').value = id;
+            document.getElementById('editUser').value = user;
+            document.getElementById('editEmail').value = email;
+            document.getElementById('editDisplay').value = display;
+            document.getElementById('editPhone').value = phone;
+            document.getElementById('editCity').value = city;
+            document.getElementById('editGender').checked = (gender === 'true');
+            document.getElementById('editAdmin').checked = (admin === 'true');
+
+            // Show the modal
+            new bootstrap.Modal(document.getElementById('editModal')).show();
+        }
+    </script>
+}

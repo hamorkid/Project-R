@@ -11,7 +11,7 @@ namespace Project_R_._8.Services
             connStr = "Data Source=(localdb)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Accounts.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
         }
 
-        public DataTable GetData(string query)
+        public DataTable GetData(string query, SqlParameter[]? parameters = null)
         {
             DataTable dt = new DataTable();
             try
@@ -20,17 +20,16 @@ namespace Project_R_._8.Services
                 {
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
+                        if (parameters != null)
+                            cmd.Parameters.AddRange(parameters); // Add this line!
+
                         conn.Open();
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
                         da.Fill(dt);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
+            catch (Exception ex) { Console.WriteLine($"Database Error: {ex.Message}"); throw; }
             return dt;
         }
 

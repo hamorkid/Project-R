@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,6 +23,10 @@
         <button class="menuButton widthChanger" id="menuButton">⚙️Menu</button>
 
         <div id="menu" class="menu hidden widthChanger">
+            @if (HttpContextAccessor.HttpContext?.Session.GetString("IsAdmin") == "True")
+            {
+                <div><a href="/Admin/Users">👤🔑User Management</a></div>
+            }
             <div><a href="/">🏠Home</a></div>
             <div><a href="/cshtml/Login">🔑Login</a></div>
             <div><a href="/cshtml/SignUp">📝SignUp</a></div>
@@ -31,7 +37,7 @@
             <div><a href="/cshtml/TermsOfService">⚖️TermsOfService</a></div>
             <div><a href="/cshtml/Rules">📜Rules</a></div>
             <div><a href="/cshtml/Inspiration">✨My Inspiration</a></div>
-            <div><a href="/cshtml/LogOut">LogOut</a></div>
+            <div><a href="/cshtml/LogOut">❌LogOut</a></div>
         </div>
     </div>
 
