@@ -90,12 +90,12 @@ window.addEventListener("keyup", (e) => {
 class Car {
     penalty = 0;
     //Drawing Variables
-    x = 10750; //las vegas x: 12750
-    y = 4200; //las vegas y: 1250
+    x = 12650; //las vegas x: 12750 
+    y = 1220; //las vegas y: 1250
 
     //Car Variables
     speed = 0;
-    angle = 0.67 * Math.PI; // las vegas angle: 0.23
+    angle = 0.23 * Math.PI; // las vegas angle: 0.23
     rpm = 0;
     gear = 1;
     pickedgear = 1;
@@ -381,7 +381,199 @@ function generateDashBoard() {
     writeSpeed(car.speed);
 }
 
+// Lap Timer System
+class LapTimer {
+    constructor() {
+        this.laps = [];
+        this.currentLapStartTime = performance.now();
+        this.isOnTrack = true;
+        this.lapStarted = false;
+        this.crossedStartLine = false;
+        this.warmupComplete = false;  // Track if warmup lap is done
+        this.startLineX = 12750;  // Las Vegas start X
+        this.startLineY = 1250;   // Las Vegas start Y
+        this.startLineRadius = 240; // Detection radius (scaled)
+    }
 
+    // Check if car is at start/finish line
+    isAtStartLine(carX, carY) {
+        const dx = carX - this.startLineX;
+        const dy = carY - this.startLineY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        return distance < this.startLineRadius;
+    }
+
+    // Update lap detection
+    update(carX, carY, surface) {
+        const atStartLine = this.isAtStartLine(carX, carY);
+
+        // Warmup lap - first crossing of start line
+        if (!this.warmupComplete && !this.lapStarted && atStartLine && surface === "Road") {
+            this.lapStarted = true;
+            this.currentLapStartTime = performance.now();
+            this.crossedStartLine = false;
+            console.log("🏁 Warmup lap started! Gather speed...");
+        }
+
+        // Warmup lap - leave start line
+        if (!this.warmupComplete && this.lapStarted && !atStartLine) {
+            this.crossedStartLine = true;
+        }
+
+        // Warmup lap - complete when crossing again
+        if (!this.warmupComplete && this.lapStarted && this.crossedStartLine && atStartLine && surface === "Road") {
+            this.warmupComplete = true;
+            this.lapStarted = false;
+            this.crossedStartLine = false;
+            console.log("✓ Warmup lap complete! Timed laps now active.");
+            return;
+        }
+
+        // Timed laps - only after warmup is complete
+        if (this.warmupComplete) {
+            // Start timed lap when crossing start line
+            if (!this.lapStarted && atStartLine && surface === "Road") {
+                this.lapStarted = true;
+                this.currentLapStartTime = performance.now();
+                this.crossedStartLine = false;
+                console.log(`⏱️  Lap ${this.laps.length + 1} started!`);
+            }
+
+            // Detect crossing after leaving
+            if (this.lapStarted && !atStartLine) {
+                this.crossedStartLine = true;
+            }
+
+            // Complete lap when crossing line again after leaving
+            if (this.lapStarted && this.crossedStartLine && atStartLine && surface === "Road") {
+                this.completeLap();
+            }
+        }
+
+        // Penalty if leaving track
+        if (surface === "OffRoad") {
+            this.isOnTrack = false;
+        } else if (surface === "Road") {
+            this.isOnTrack = true;
+        }
+    }
+
+    // Complete a lap
+    completeLap() {
+        const lapTime = (performance.now() - this.currentLapStartTime) / 1000; // Convert to seconds
+        this.laps.push(lapTime);
+
+        console.log(`✓ Lap ${this.laps.length} completed: ${this.formatTime(lapTime)}`);
+        console.log(`🏆 Best lap: ${this.formatTime(this.getBestLap())}`);
+
+        // Reset for next lap
+        this.currentLapStartTime = performance.now();
+        this.crossedStartLine = false;
+        this.lapStarted = false;
+    }
+
+    // Get current lap time
+    getCurrentLapTime() {
+        if (!this.lapStarted) return 0;
+        return (performance.now() - this.currentLapStartTime) / 1000;
+    }
+
+    // Format time as MM:SS.MS
+    formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        const ms = Math.floor((seconds % 1) * 100);
+        return `${minutes}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(2, '0')}`;
+    }
+
+    // Get best lap
+    getBestLap() {
+        if (this.laps.length === 0) return Infinity;
+        return Math.min(...this.laps);
+    }
+
+    // Get last lap
+    getLastLap() {
+        if (this.laps.length === 0) return 0;
+        return this.laps[this.laps.length - 1];
+    }
+
+    // Get all laps
+    getAllLaps() {
+        return this.laps;
+    }
+
+    // Get lap count
+    getLapCount() {
+        return this.laps.length;
+    }
+}
+
+// UI Display Functions
+function displayLapTimes() {
+    const lapDisplay = document.getElementById("lap-display");
+    if (!lapDisplay) return;
+
+    // Show nothing during warmup lap
+    if (!lapTimer.warmupComplete) {
+        lapDisplay.innerHTML = `
+            <div style="color: white; font-family: monospace; font-size: 14px;">
+                <div style="font-size: 18px;">🏁 WARMUP LAP</div>
+                <div>Gather speed...</div>
+            </div>
+        `;
+        return;
+    }
+
+    const currentLap = lapTimer.getCurrentLapTime();
+    const bestLap = lapTimer.getBestLap();
+    const lastLap = lapTimer.getLastLap();
+    const lapCount = lapTimer.getLapCount();
+    // Show current lap number (completed + 1 if currently on a lap)
+    const currentLapNum = lapTimer.lapStarted ? lapCount + 1 : lapCount;
+
+    lapDisplay.innerHTML = `
+        <div style="color: white; font-family: monospace; font-size: 14px;">
+            <div>Lap: ${currentLapNum}</div>
+            <div>Current: ${lapTimer.formatTime(currentLap)}</div>
+            <div>Best: ${bestLap === Infinity ? "--:--" : lapTimer.formatTime(bestLap)}</div>
+            <div>Last: ${lastLap === 0 ? "--:--" : lapTimer.formatTime(lastLap)}</div>
+        </div>
+    `;
+}
+
+// UI Display Functions
+function displayLapTimes() {
+    const lapDisplay = document.getElementById("lap-display");
+    if (!lapDisplay) return;
+
+    // Don't show anything during warmup lap
+    if (!lapTimer.warmupComplete) {
+        lapDisplay.innerHTML = `
+            <div style="color: white; font-family: monospace; font-size: 14px;">
+                <div>⚠️ Warmup Lap</div>
+                <div>Gather speed...</div>
+            </div>
+        `;
+        return;
+    }
+
+    const currentLap = lapTimer.getCurrentLapTime();
+    const bestLap = lapTimer.getBestLap();
+    const lastLap = lapTimer.getLastLap();
+    const lapCount = lapTimer.getLapCount();
+
+    lapDisplay.innerHTML = `
+        <div style="color: white; font-family: monospace; font-size: 14px;">
+            <div>Lap: ${lapCount}</div>
+            <div>Current: ${lapTimer.formatTime(currentLap)}</div>
+            <div>Best: ${bestLap === Infinity ? "--:--" : lapTimer.formatTime(bestLap)}</div>
+            <div>Last: ${lastLap === 0 ? "--:--" : lapTimer.formatTime(lastLap)}</div>
+        </div>
+    `;
+}
+
+lapTimer = new LapTimer();
 car = new Car();
 let lastTime = performance.now();
 function gameLoop(currentTime) {
@@ -391,6 +583,11 @@ function gameLoop(currentTime) {
     clearFrame()
     generateTrack(deltaTime);
     car.update(deltaTime);
+
+    const surface = detectSurface();
+    lapTimer.update(car.x, car.y, surface);
+    displayLapTimes();
+
     generateCar();
     generateDashBoard();
 
@@ -406,3 +603,39 @@ carImg.src = skins.SELECTED_SKIN;
 
 requestAnimationFrame(gameLoop);
 
+document.getElementById("finishRaceBtn").addEventListener("click", async () => {
+    if (lapTimer.warmupComplete && lapTimer.getLapCount() > 0) {
+        console.log("Saving lap time:", lapTimer.getBestLap());
+
+        try {
+            // Get the antiforgery token from the page
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+
+            const response = await fetch("/cshtml/LeaderBoard-LasVegas?handler=SaveLap", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "RequestVerificationToken": token
+                },
+                body: JSON.stringify({
+                    lapTimeSeconds: lapTimer.getBestLap()
+                })
+            });
+
+            console.log("Response status:", response.status);
+            const text = await response.text();
+            console.log("Response text:", text);
+
+            if (text) {
+                const data = JSON.parse(text);
+                console.log("Server response:", data);
+                alert(data.message);
+            } else {
+                alert("Empty response from server");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error: " + error.message);
+        }
+    }
+});

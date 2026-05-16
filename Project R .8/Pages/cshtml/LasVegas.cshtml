@@ -3,6 +3,8 @@
 @{
 }
 
+@Html.AntiForgeryToken()
+
 <canvas id="myCanvas" style="height:100vh; width:100vw;">
 	Your browser does not support the HTML canvas tag.
 </canvas>
@@ -25,6 +27,22 @@
 	<div id="skin-buttons" style="display:flex; gap:5px;">
 	</div>
 </div>
+
+<button id="finishRaceBtn" style="position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer; z-index: 1000;">
+    Finish Race & Save
+</button>
+
+<div id="lap-display" style="
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border: 2px solid white;
+    border-radius: 8px;
+    z-index: 100;
+"></div>
+
 
 
 @section Scripts {
@@ -89,6 +107,25 @@
 
         const skin = new Skins();
         skin.buildUI();
+
+        async function saveLapTimeToDatabase(bestLapTime) {
+            try {
+                const response = await fetch("/LeaderBoard-LasVegas?handler=SaveLap", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        lapTimeSeconds: bestLapTime
+                    })
+                });
+
+                const data = await response.json();
+                console.log(data.message);
+            } catch (error) {
+                console.error("Error saving lap time:", error);
+            }
+        }
 	</script>
 
 	<script src="~/js/game.js" asp-append-version="true"></script>
