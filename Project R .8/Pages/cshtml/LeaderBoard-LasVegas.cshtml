@@ -16,9 +16,9 @@
             <th>player</th>
             <th>time</th>
         </tr>
-        @if (Model.LeaderboardEntries.Count > 0)
+        @if (Model.LeaderboardEntriesLV.Count > 0)
         {
-            @foreach (var entry in Model.LeaderboardEntries)
+            @foreach (var entry in Model.LeaderboardEntriesLV)
             {
                 <tr>
                     <td class="rank">@entry.Rank</td>

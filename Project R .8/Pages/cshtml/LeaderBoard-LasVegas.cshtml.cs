@@ -8,7 +8,7 @@ namespace Project_R_._8.Pages.cshtml
     public class LeaderBoard_LasVegasModel : PageModel
     {
         private readonly DBHelper _dbHelper;
-        public List<LeaderboardEntry> LeaderboardEntries { get; set; }
+        public List<LeaderboardEntry> LeaderboardEntriesLV { get; set; }
 
         public LeaderBoard_LasVegasModel(DBHelper dbHelper)
         {
@@ -29,11 +29,11 @@ namespace Project_R_._8.Pages.cshtml
             ";
 
             DataTable dt = _dbHelper.GetData(query);
-            LeaderboardEntries = new List<LeaderboardEntry>();
+            LeaderboardEntriesLV = new List<LeaderboardEntry>();
 
             foreach (DataRow row in dt.Rows)
             {
-                LeaderboardEntries.Add(new LeaderboardEntry
+                LeaderboardEntriesLV.Add(new LeaderboardEntry
                 {
                     Rank = Convert.ToInt32(row["Rank"]),
                     UserName = row["PlayerName"].ToString(),

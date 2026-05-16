@@ -131,7 +131,6 @@ class Car {
         //clutch
         if (window.keys["Space"]) {
             //Gear selection
-		console.log("Clutch");
             if (window.keys["KeyU"]) {
                 this.pickedgear = 1;
             }
@@ -141,7 +140,7 @@ class Car {
             else if (window.keys["KeyJ"]) {
                 this.pickedgear = 3;
             }
-            else if (window.keys["keyK"]) {
+            else if (window.keys["KeyK"]) {
                 this.pickedgear = 4;
             }
             else if (window.keys["KeyN"]) {
@@ -301,7 +300,6 @@ function detectSurface() {
     function near(value, target, tolerance = 20) {
         return Math.abs(value - target) <= tolerance;
     }
-    console.log(r, g, b)
     if (near(r, 49) && near(g, 49) && near(b, 49)) {
         return "Road";
     } else if (near(r, 255) && near(g, 255) && near(b, 255)) {
@@ -309,17 +307,6 @@ function detectSurface() {
     } else if (near(r, 255) && near(g, 0) && near(b, 0)) {
         return "Curb";
     }
-    //console.log(imgData);
-    /*
-    if (imgData == grayRoad) {
-        return "Road";
-    }
-    else if (imgData == whiteEdges) {
-        return "Edge";
-    }
-    else if (imgData == redCurbs) {
-        return "Curb";
-    } */
     return "OffRoad";
 }
 
@@ -333,8 +320,6 @@ function generateCar() {
     ctx.rotate(-car.angle);    // rotate around that  
     ctx.drawImage(carImg, -32,  -32, 96, 96);
     ctx.restore();
-
-    //console.log("Car drawn at:", car.x, car.y, "with angle:", car.angle);
 
     carImg.onerror = function () {
         console.error("Image couldn't load. Check path:", carImg.src);
@@ -412,7 +397,6 @@ class LapTimer {
             this.lapStarted = true;
             this.currentLapStartTime = performance.now();
             this.crossedStartLine = false;
-            console.log("🏁 Warmup lap started! Gather speed...");
         }
 
         // Warmup lap - leave start line
@@ -425,7 +409,6 @@ class LapTimer {
             this.warmupComplete = true;
             this.lapStarted = false;
             this.crossedStartLine = false;
-            console.log("✓ Warmup lap complete! Timed laps now active.");
             return;
         }
 
@@ -436,7 +419,6 @@ class LapTimer {
                 this.lapStarted = true;
                 this.currentLapStartTime = performance.now();
                 this.crossedStartLine = false;
-                console.log(`⏱️  Lap ${this.laps.length + 1} started!`);
             }
 
             // Detect crossing after leaving
@@ -462,9 +444,6 @@ class LapTimer {
     completeLap() {
         const lapTime = (performance.now() - this.currentLapStartTime) / 1000; // Convert to seconds
         this.laps.push(lapTime);
-
-        console.log(`✓ Lap ${this.laps.length} completed: ${this.formatTime(lapTime)}`);
-        console.log(`🏆 Best lap: ${this.formatTime(this.getBestLap())}`);
 
         // Reset for next lap
         this.currentLapStartTime = performance.now();
@@ -605,7 +584,6 @@ requestAnimationFrame(gameLoop);
 
 document.getElementById("finishRaceBtn").addEventListener("click", async () => {
     if (lapTimer.warmupComplete && lapTimer.getLapCount() > 0) {
-        console.log("Saving lap time:", lapTimer.getBestLap());
 
         try {
             // Get the antiforgery token from the page
@@ -622,13 +600,10 @@ document.getElementById("finishRaceBtn").addEventListener("click", async () => {
                 })
             });
 
-            console.log("Response status:", response.status);
             const text = await response.text();
-            console.log("Response text:", text);
 
             if (text) {
                 const data = JSON.parse(text);
-                console.log("Server response:", data);
                 alert(data.message);
             } else {
                 alert("Empty response from server");

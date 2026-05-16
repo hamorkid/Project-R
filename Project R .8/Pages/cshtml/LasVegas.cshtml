@@ -22,14 +22,14 @@
 
 <h1 id="SpeedNumber" style="position:absolute;right: 53px;bottom: 47px;margin: 0px">speed</h1>
 
-<div id="skin-selector" style="position:absolute; top:10px; left:10px; z-index:100; background:rgba(0,0,0,0.6); padding:10px; border-radius:8px;">
+<div id="skin-selector" style="position:absolute; bottom:160px; left:10px; z-index:100; background:rgba(0,0,0,0.6); padding:10px; border-radius:8px;">
 	<p style="color:white; margin:0 0 5px 0; font-size:12px;">SELECT SKIN</p>
 	<div id="skin-buttons" style="display:flex; gap:5px;">
 	</div>
 </div>
 
-<button id="finishRaceBtn" style="position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer; z-index: 1000;">
-    Finish Race & Save
+<button id="finishRaceBtn" style="position: fixed; bottom: 20px; right: 730px; padding: 6px 10px; background: transparent; color: #fff; border: 1px solid #fff; cursor: pointer; z-index: 1000; font-size: 12px;">
+    Upload Best Times To LeaderBoards
 </button>
 
 <div id="lap-display" style="
@@ -71,6 +71,10 @@
 
             setSkin(skin) {
                 this.SELECTED_SKIN = skin;
+                // Update carImg if it exists
+                if (typeof carImg !== 'undefined') {
+                    carImg.src = skin;
+                }
             }
 
             buildUI() {
@@ -96,6 +100,10 @@
                     container.appendChild(img);
                 });
             }
+        }
+
+        function updateCarSkin() {
+            carImg.src = skins.SELECTED_SKIN;
         }
 
 		class Maps{
