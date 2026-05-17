@@ -90,12 +90,12 @@ window.addEventListener("keyup", (e) => {
 class Car {
     penalty = 0;
     //Drawing Variables
-    x = 12650; //las vegas x: 12750 
-    y = 1220; //las vegas y: 1250
+    x = maps.StartX; //las vegas x: 12750 
+    y = maps.StartY; //las vegas y: 1250
 
     //Car Variables
     speed = 0;
-    angle = 0.23 * Math.PI; // las vegas angle: 0.23
+    angle = maps.StartAngle * Math.PI; // las vegas angle: 0.23
     rpm = 0;
     gear = 1;
     pickedgear = 1;
@@ -375,9 +375,9 @@ class LapTimer {
         this.lapStarted = false;
         this.crossedStartLine = false;
         this.warmupComplete = false;  // Track if warmup lap is done
-        this.startLineX = 12750;  // Las Vegas start X
-        this.startLineY = 1250;   // Las Vegas start Y
-        this.startLineRadius = 240; // Detection radius (scaled)
+        this.startLineX = maps.FinishX;
+        this.startLineY = maps.FinishY;
+        this.startLineRadius = 240; // Detection radius
     }
 
     // Check if car is at start/finish line
@@ -581,36 +581,3 @@ const carImg = new Image();
 carImg.src = skins.SELECTED_SKIN;
 
 requestAnimationFrame(gameLoop);
-
-document.getElementById("finishRaceBtn").addEventListener("click", async () => {
-    if (lapTimer.warmupComplete && lapTimer.getLapCount() > 0) {
-
-        try {
-            // Get the antiforgery token from the page
-            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
-
-            const response = await fetch("/cshtml/LeaderBoard-LasVegas?handler=SaveLap", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "RequestVerificationToken": token
-                },
-                body: JSON.stringify({
-                    lapTimeSeconds: lapTimer.getBestLap()
-                })
-            });
-
-            const text = await response.text();
-
-            if (text) {
-                const data = JSON.parse(text);
-                alert(data.message);
-            } else {
-                alert("Empty response from server");
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Error: " + error.message);
-        }
-    }
-});

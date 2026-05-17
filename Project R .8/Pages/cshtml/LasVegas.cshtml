@@ -108,23 +108,39 @@
 
 		class Maps{
 			constructor() {
-				this.MAP = "@Url.Content("~/assets/Maps/Las_VegasU.png")"
-			}
+				this.MAP = "@Url.Content("~/assets/Maps/Las_VegasU.png")";
+                this.StartX = 12650;
+                this.StartY = 1220;
+                this.StartAngle = 0.23;
+                this.FinishX = 12750;
+                this.FinishY = 1250;
+            }
 			// Add More Maps When I Make Them
 		}
 
         const skin = new Skins();
         skin.buildUI();
 
-        document.getElementById("finishRaceBtn").addEventListener("click", async () => {
+                document.getElementById("finishRaceBtn").addEventListener("click", async () => {
             if (lapTimer.warmupComplete && lapTimer.getLapCount() > 0) {
                 console.log("Saving lap time:", lapTimer.getBestLap());
 
                 try {
+                    // Detect which track based on the map filename
+                    let leaderboardPath = "/cshtml/LeaderBoard-LasVegas"; // default
+
+                    const mapLower = maps.MAP.toLowerCase();
+                    if (mapLower.includes("monaco")) {
+                        leaderboardPath = "/cshtml/LeaderBoard-Monaco";
+                    }
+
+                    console.log("Map:", maps.MAP);
+                    console.log("Saving to:", leaderboardPath);
+
                     // Get the antiforgery token from the page
                     const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
 
-                    const response = await fetch("/cshtml/LeaderBoard-LasVegas?handler=SaveLap", {
+                    const response = await fetch(leaderboardPath + "?handler=SaveLap", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

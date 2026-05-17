@@ -8,7 +8,7 @@ namespace Project_R_._8.Pages.cshtml
     public class LeaderBoard_LasVegasModel : PageModel
     {
         private readonly DBHelper _dbHelper;
-        public List<LeaderboardEntry> LeaderboardEntriesLV { get; set; }
+        public List<LeaderboardEntryLV> LeaderboardEntriesLV { get; set; } = new List<LeaderboardEntryLV>();
 
         public LeaderBoard_LasVegasModel(DBHelper dbHelper)
         {
@@ -29,20 +29,24 @@ namespace Project_R_._8.Pages.cshtml
             ";
 
             DataTable dt = _dbHelper.GetData(query);
-            LeaderboardEntriesLV = new List<LeaderboardEntry>();
+            LeaderboardEntriesLV = new List<LeaderboardEntryLV>();
 
             foreach (DataRow row in dt.Rows)
             {
-                LeaderboardEntriesLV.Add(new LeaderboardEntry
+                // Only add if LapTime is not null
+                if (row["LapTime"] != DBNull.Value)
                 {
-                    Rank = Convert.ToInt32(row["Rank"]),
-                    UserName = row["PlayerName"].ToString(),
-                    LapTime = (TimeSpan)row["LapTime"]
-                });
+                    LeaderboardEntriesLV.Add(new LeaderboardEntryLV
+                    {
+                        Rank = Convert.ToInt32(row["Rank"]),
+                        UserName = row["PlayerName"].ToString()!,
+                        LapTime = (TimeSpan)row["LapTime"]
+                    });
+                }
             }
         }
 
-        public IActionResult OnPostSaveLap([FromBody] LapTimeRequest request)
+        public IActionResult OnPostSaveLap([FromBody] LapTimeRequestLV request)
         {
             Console.WriteLine("OnPostSaveLap called"); // Debug line
             var userIdString = HttpContext.Session.GetString("UserId");
@@ -68,8 +72,8 @@ namespace Project_R_._8.Pages.cshtml
                 {
                     // Insert new record
                     string insertQuery = @"
-                        INSERT INTO Performance (UserId, LasVegasRecord, scorePoints, LastRaceDate, TotalRaces)
-                        VALUES (@UserId, @LapTime, 0, GETDATE(), 1)
+                        INSERT INTO Performance (UserId, LasVegasRecord, LastRaceDate, TotalRaces)
+                        VALUES (@UserId, @LapTime, GETDATE(), 1)
                     ";
                     _dbHelper.ExecuteQuery(insertQuery, new[]
                     {
@@ -104,14 +108,14 @@ namespace Project_R_._8.Pages.cshtml
         }
     }
 
-    public class LeaderboardEntry
+    public class LeaderboardEntryLV
     {
         public int Rank { get; set; }
-        public string UserName { get; set; }
+        public string UserName { get; set; } = "";
         public TimeSpan LapTime { get; set; }
     }
 
-    public class LapTimeRequest
+    public class LapTimeRequestLV
     {
         public double LapTimeSeconds { get; set; }
     }

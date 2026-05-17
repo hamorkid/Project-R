@@ -8,7 +8,7 @@ namespace Project_R_._8.Pages.cshtml
     public class LeaderBoard_MonacoModel : PageModel
     {
         private readonly DBHelper _dbHelper;
-        public List<LeaderboardEntry> LeaderboardEntriesMO { get; set; }
+        public List<LeaderboardEntryMO> LeaderboardEntriesMO { get; set; } = new List<LeaderboardEntryMO>();
 
         public LeaderBoard_MonacoModel(DBHelper dbHelper)
         {
@@ -19,30 +19,34 @@ namespace Project_R_._8.Pages.cshtml
         {
             string query = @"
                 SELECT TOP 10
-                    ROW_NUMBER() OVER (ORDER BY p.LasVegasRecord ASC) AS Rank,
+                    ROW_NUMBER() OVER (ORDER BY p.MonacoRecord ASC) AS Rank,
                     u.DisplayName AS PlayerName,
-                    p.LasVegasRecord AS LapTime
+                    p.MonacoRecord AS LapTime
                 FROM Performance p
                 INNER JOIN Users u ON p.UserId = u.UserId
-                WHERE p.LasVegasRecord IS NOT NULL
-                ORDER BY p.LasVegasRecord ASC
+                WHERE p.MonacoRecord IS NOT NULL
+                ORDER BY p.MonacoRecord ASC
             ";
 
             DataTable dt = _dbHelper.GetData(query);
-            LeaderboardEntriesMO = new List<LeaderboardEntry>();
+            LeaderboardEntriesMO = new List<LeaderboardEntryMO>();
 
             foreach (DataRow row in dt.Rows)
             {
-                LeaderboardEntriesMO.Add(new LeaderboardEntry
+                // Only add if LapTime is not null
+                if (row["LapTime"] != DBNull.Value)
                 {
-                    Rank = Convert.ToInt32(row["Rank"]),
-                    UserName = row["PlayerName"].ToString(),
-                    LapTime = (TimeSpan)row["LapTime"]
-                });
+                    LeaderboardEntriesMO.Add(new LeaderboardEntryMO
+                    {
+                        Rank = Convert.ToInt32(row["Rank"]),
+                        UserName = row["PlayerName"].ToString()!,
+                        LapTime = (TimeSpan)row["LapTime"]
+                    });
+                }
             }
         }
 
-        public IActionResult OnPostSaveLap([FromBody] LapTimeRequest request)
+        public IActionResult OnPostSaveLap([FromBody] LapTimeRequestMO request)
         {
             Console.WriteLine("OnPostSaveLap called"); // Debug line
             var userIdString = HttpContext.Session.GetString("UserId");
@@ -68,8 +72,8 @@ namespace Project_R_._8.Pages.cshtml
                 {
                     // Insert new record
                     string insertQuery = @"
-                        INSERT INTO Performance (UserId, LasVegasRecord, scorePoints, LastRaceDate, TotalRaces)
-                        VALUES (@UserId, @LapTime, 0, GETDATE(), 1)
+                        INSERT INTO Performance (UserId, MonacoRecord, LastRaceDate, TotalRaces)
+                        VALUES (@UserId, @LapTime, GETDATE(), 1)
                     ";
                     _dbHelper.ExecuteQuery(insertQuery, new[]
                     {
@@ -82,11 +86,11 @@ namespace Project_R_._8.Pages.cshtml
                     // Update existing record if new time is better
                     string updateQuery = @"
                         UPDATE Performance
-                        SET LasVegasRecord = @LapTime,
+                        SET MonacoRecord = @LapTime,
                             LastRaceDate = GETDATE(),
                             TotalRaces = TotalRaces + 1
                         WHERE UserId = @UserId
-                        AND (LasVegasRecord IS NULL OR @LapTime < LasVegasRecord)
+                        AND (MonacoRecord IS NULL OR @LapTime < MonacoRecord)
                     ";
                     _dbHelper.ExecuteQuery(updateQuery, new[]
                     {
@@ -102,5 +106,15 @@ namespace Project_R_._8.Pages.cshtml
                 return BadRequest(new { message = $"Error saving lap time: {ex.Message}" });
             }
         }
+    }
+    public class LeaderboardEntryMO
+    {
+        public int Rank { get; set; }
+        public string UserName { get; set; } = "";
+        public TimeSpan LapTime { get; set; }
+    }
+    public class LapTimeRequestMO
+    {
+        public double LapTimeSeconds { get; set; }
     }
 }

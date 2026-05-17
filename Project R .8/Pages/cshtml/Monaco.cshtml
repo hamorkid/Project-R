@@ -70,6 +70,10 @@
 
             setSkin(skin) {
                 this.SELECTED_SKIN = skin;
+                // Update carImg if it exists
+                if (typeof carImg !== 'undefined') {
+                    carImg.src = skin;
+                }
             }
 
             buildUI() {
@@ -95,15 +99,16 @@
                     container.appendChild(img);
                 });
             }
-
-        }
-        function updateCarSkin() {
-            carImg.src = skins.SELECTED_SKIN;
         }
 
         class Maps{
             constructor() {
-                this.MAP = "@Url.Content("~/assets/Maps/Monaco.png")"
+                this.MAP = "@Url.Content("~/assets/Maps/MonacoU.png")"
+                this.StartX = 3780;
+                this.StartY = 3200;
+                this.StartAngle = 1.8;
+                this.FinishX = 3750;
+                this.FinishY = 3300;
             }
             // Add More Maps When I Make Them
         }
@@ -113,7 +118,6 @@
 
         document.getElementById("finishRaceBtn").addEventListener("click", async () => {
             if (lapTimer.warmupComplete && lapTimer.getLapCount() > 0) {
-                console.log("Saving lap time:", lapTimer.getBestLap());
 
                 try {
                     // Get the antiforgery token from the page
@@ -138,6 +142,7 @@
                         const data = JSON.parse(text);
                         console.log("Server response:", data);
                         alert(data.message);
+                        location.reload();
                     } else {
                         alert("Empty response from server");
                     }
