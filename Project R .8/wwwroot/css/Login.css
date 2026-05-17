@@ -34,8 +34,8 @@ input[type="text"], [type="password"], [type="select"] {
 }
 
 input[type="checkbox"] {
-    width: 50px;
-    height: 50px;
+    width: 25px;
+    height: 25px;
     padding: 10px;
     background-color: rgb(117, 124, 152);
     border: solid rgb(67, 74, 102) 2px;

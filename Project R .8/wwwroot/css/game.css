@@ -46,10 +46,51 @@
     display: none;
 }
 
-.mapPick {
+.map-selection-body {
+    background: #111;
+    font-family: sans-serif;
+}
+
+.map-pick {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 20px;
-    margin-top: 50px;
+    align-items: center;
+    gap: 40px;
+    height: 100vh;
 }
+
+.map-pick-card {
+    width: 300px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+    .map-pick-card:hover {
+        transform: scale(1.05);
+    }
+
+.map-pick-link {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 0 0 6px 6px;
+}
+
+    .map-pick-link:hover {
+        background: rgba(255, 255, 0, 0.2);
+    }

@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Project_R_._8.Services;
 using System;
 
-AppDomain.CurrentDomain.SetData("DataDirectory",
-    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data"));
+// Add this line in Program.cs before building the app
+AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "APP_DATA"));
 
 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
 {

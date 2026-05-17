@@ -8,7 +8,9 @@ namespace Project_R_._8.Services
         private readonly string connStr;
         public DBHelper(IConfiguration configuration)
         {
-            connStr = "Data Source=(localdb)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Accounts.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
+            string dbPath = Path.Combine(Directory.GetCurrentDirectory(), "APP_DATA", "Accounts.mdf");
+            Console.WriteLine($"Database path: {dbPath}"); // Debug line
+            connStr = $"Data Source=(localdb)\\MSSQLLocalDB;AttachDbFilename={dbPath};Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False";
         }
 
         public DataTable GetData(string query, SqlParameter[]? parameters = null)

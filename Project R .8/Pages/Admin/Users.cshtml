@@ -4,9 +4,9 @@
     ViewData["Title"] = "Users Admin";
 }
 
-<div class="container mt-4">
-    <h2>User Administration</h2>
-    <table class="table table-bordered">
+<div class="admin-container">
+    <h2 class="admin-title">User Administration</h2>
+    <table class="admin-table">
         <thead>
             <tr>
                 <th>Username</th>
@@ -23,10 +23,9 @@
                     <td>@user.Email</td>
                     <td>@(user.IsAdmin ? "Admin" : "User")</td>
                     <td>
-                        <!-- This button stores data in 'data-' attributes for the JS to grab -->
-                        <button type="button" class="btn btn-sm btn-warning"
+                        <button type="button" class="admin-btn-edit"
                                 onclick="openEditModal('@user.UserId', '@user.UserName', '@user.Email', '@user.DisplayName', '@user.Phone', '@user.CityId', '@user.Gender.ToString().ToLower()', '@user.IsAdmin.ToString().ToLower()')">
-                            Edit All Fields
+                            Edit
                         </button>
                     </td>
                 </tr>
@@ -36,11 +35,13 @@
 </div>
 
 <!-- EDIT MODAL -->
-<div class="modal fade" id="editModal" tabindex="-1">
+<div class="modal fade admin-modal" id="editModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" asp-page-handler="UpdateUser">
-                <div class="modal-header"><h5>Edit User</h5></div>
+                <div class="modal-header">
+                    <h5>Edit User</h5>
+                </div>
                 <div class="modal-body">
                     <input type="hidden" id="editId" asp-for="EditUser.UserId" />
                     <div class="mb-2">
@@ -73,7 +74,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Save Changes</button>
+                    <button type="submit" class="admin-btn-save">Save Changes</button>
                 </div>
             </form>
         </div>

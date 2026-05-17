@@ -93,3 +93,155 @@ a:hover, button:hover {
     max-width: 600px;
     padding: 4px 8px;
 }
+
+.admin-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: sans-serif;
+}
+
+.admin-title {
+    color: #fff;
+    font-size: 24px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .admin-table thead {
+        background: #222;
+    }
+
+    .admin-table th {
+        color: #aaa;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid #333;
+    }
+
+    .admin-table td {
+        color: #fff;
+        padding: 12px 16px;
+        border-bottom: 1px solid #222;
+        font-size: 14px;
+    }
+
+    .admin-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .admin-table tr:hover td {
+        background: #222;
+    }
+
+.admin-btn-edit {
+    background: transparent;
+    color: yellow;
+    border: 1px solid yellow;
+    padding: 4px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+}
+
+    .admin-btn-edit:hover {
+        background: yellow;
+        color: #000;
+    }
+
+/* Admin Modal */
+.admin-modal .modal-content {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: #fff;
+}
+
+.admin-modal .modal-header {
+    border-bottom: 1px solid #333;
+}
+
+    .admin-modal .modal-header h5 {
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 14px;
+    }
+
+.admin-modal .modal-footer {
+    border-top: 1px solid #333;
+}
+
+.admin-modal label {
+    color: #aaa;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.admin-modal .form-control {
+    background: #111;
+    border: 1px solid #333;
+    color: #fff;
+    font-size: 14px;
+}
+
+    .admin-modal .form-control:focus {
+        background: #111;
+        border-color: yellow;
+        color: #fff;
+        box-shadow: none;
+    }
+
+.admin-modal .form-check-label {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.admin-modal .form-check-input:checked {
+    background-color: yellow;
+    border-color: yellow;
+}
+
+.admin-btn-save {
+    background: transparent;
+    color: yellow;
+    border: 1px solid yellow;
+    padding: 6px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+}
+
+    .admin-btn-save:hover {
+        background: yellow;
+        color: #000;
+    }
+
+.form-check {
+    display: block;
+    position: relative;
+    margin-bottom: 0.75rem;
+    clear: both;
+}
